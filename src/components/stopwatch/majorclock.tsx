@@ -1,9 +1,7 @@
 import * as React from 'react';
 
 export interface ShowTime {
-    min: string;
-    sec: string;
-    ms: string;
+    timeStr: string;
 }
 
 const style = {
@@ -13,9 +11,9 @@ const style = {
 };
 
 const MajorClock = (props: ShowTime) => {
-    const {min, sec, ms} = props;
+    const {timeStr} = props;
     return <div style={style}>
-        {`${min}:${sec}:${ms}`}
+        {timeStr}
     </div>
   };
 

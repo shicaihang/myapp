@@ -3,6 +3,7 @@ import { Button } from 'antd';
 
 interface IButton {
     active: boolean;
+    valid: boolean;
     onStart?: () => void;
     onPause?: () => void;
     onSplit?: () => void;
@@ -10,7 +11,7 @@ interface IButton {
 }
 
 const ControlButton = (props: IButton) => {
-    const { active, onStart, onPause, onSplit, onReset } = props;
+    const { active, valid, onStart, onPause, onSplit, onReset} = props;
 
     const style = {
         display: 'flex',
@@ -19,9 +20,9 @@ const ControlButton = (props: IButton) => {
         width: '40%',
     };
     return <div style={style}>
-        <Button type={active ? "danger" : "primary"} onClick={active ? onPause : onStart}>{active ? '暂停' : '开始'}</Button>
-        <Button type="primary" onClick={onSplit}>{'计次'}</Button>
-        <Button type="primary" onClick={onReset}>{'重置'}</Button>
+        <Button type={active ? "danger" : "primary"} disabled={!valid} onClick={active ? onPause : onStart}>{active ? '暂停' : '开始'}</Button>
+        <Button type="primary" onClick={onSplit} disabled={!active || !valid}>{'计次'}</Button>
+        <Button type="primary" onClick={onReset} disabled={active}>{'重置'}</Button>
     </div>
 };
 

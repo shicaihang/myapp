@@ -7,11 +7,12 @@
       "coverage/lcov-report/*.js"
     ]
   },
-  "rules":{
+  "rules": {
     "interface-name": [false, "never-prefix"],
     "ordered-imports": false,
     "no-debugger": false,
-    "no-console": [false, "log", "error"]
+    "no-console": [false, "log", "error"],
+    "object-literal-sort-keys": false
   }
 
 }

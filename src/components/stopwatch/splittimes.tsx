@@ -14,7 +14,7 @@ const SplitTimes = (props: ISplits) => {
 
 const renderItem = (props: ISplits) => {
     const { times } = props;
-    return times.map((t: ShowTime, index: number) => <p key={t.toString()}>{`${t.min}:${t.sec}:${t.ms}  计次${index + 1}`}</p>);
+    return times.map((t: ShowTime, index: number) => <p key={t.toString()}>{`${t}  计次${index + 1}`}</p>);
 }
 
 
