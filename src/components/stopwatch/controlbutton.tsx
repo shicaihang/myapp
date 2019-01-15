@@ -15,7 +15,7 @@ const ControlButton = (props: IButton) => {
 
     const style = {
         display: 'flex',
-        'justify-content': 'space-around',
+        justifyContent: 'space-around',
         margin: '20px auto',
         width: '40%',
     };

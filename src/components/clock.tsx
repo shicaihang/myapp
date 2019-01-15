@@ -34,8 +34,7 @@ export default class Clock extends React.Component<Time> {
     }
 
     public componentWillUnmount() {
-        const state: any = this.state;
-        clearInterval(state.timeID);
+        clearInterval(this.timeID);
     }
 
     public tick() {

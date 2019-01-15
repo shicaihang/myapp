@@ -12,7 +12,12 @@ export interface ResetENTHUSIASM {
     type: constants.RESET_ENTHUSIASM;
 }
 
-export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm | ResetENTHUSIASM;
+export interface AddLogENTHUSIASM {
+    type: constants.ADD_CONSOLELOG;
+    log: string;
+}
+
+export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm | ResetENTHUSIASM | AddLogENTHUSIASM;
 
 export function incrementEnthusiasm(): IncrementEnthusiasm {
     return {
@@ -28,5 +33,11 @@ export function decrementEnthusiasm(): DecrementEnthusiasm {
 export function resetEnthusiasm(): ResetENTHUSIASM {
     return {
         type: constants.RESET_ENTHUSIASM
+    }
+}
+export function addLogEnthusiasm(log: string): AddLogENTHUSIASM {
+    return {
+        type: constants.ADD_CONSOLELOG,
+        log,
     }
 }
