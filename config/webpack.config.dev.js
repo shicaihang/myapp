@@ -12,6 +12,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const tsImportPluginFactory = require('ts-import-plugin');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -22,8 +23,6 @@ const publicPath = '/';
 const publicUrl = '';
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
-
-const tsImportPluginFactory = require('ts-import-plugin');
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -151,7 +150,6 @@ module.exports = {
               plugins: [
                 [  "import",{libraryName: "antd", style: 'css'}] // antd按需加载
              ],
-          
             },
           },
 

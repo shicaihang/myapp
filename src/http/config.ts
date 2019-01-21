@@ -29,6 +29,7 @@ interface HCfg {
     ContentType?: string;
     Authorization?: string;
     Uuid?: string;
+    needToken?: boolean;
 }
 export interface Cfg {
     method?:RequestMethod;
@@ -41,7 +42,7 @@ export interface Cfg {
     referrer?: string;
 }
 export function HeaderConfig(cfg: HCfg = {}) {
-    const token = Token ? `Bearer ${Token}` : '';
+    const token = Token && cfg.needToken ? `Bearer ${Token}` : '';
     const accept = cfg.Accept ? cfg.Accept : 'application/json';
     const contentType = cfg.ContentType ? cfg.ContentType : 'application/json'
     const header = {

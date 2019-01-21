@@ -1,10 +1,12 @@
 import FetchConfig from './config';
 import { RequestMethod, HeaderConfig, Cfg } from './config';
+import fetchJsonp from 'fetch-jsonp';
 
 export interface V {
     url: string;
     params?: any;
     data?: any;
+    needToken?: boolean;
 }
 
 export default class HTTP {
@@ -45,6 +47,39 @@ export default class HTTP {
                 console.log(`error = ${error}`);
             });
     }
+    public static async getJP(prop: V) {
+        let { url } = prop;
+        const { params } = prop;
+        if (params) {
+            const paramsArray: string[] = [];
+            // 拼接参数
+            Object.keys(params).forEach(key => paramsArray.push(`${key}=${params[key]}`));
+            if (url.search(/\?/) === -1) {
+                url += `?${paramsArray.join('&')}`;
+            } else {
+                url += `&${paramsArray.join('&')}`;
+            }
+        }
+        // const setting = {
+        //     needToken: false,
+        // }
+        // const fetchCfg: Cfg = FetchConfig();
+        const myCfg = {
+            jsonpCallback: 'custom_callback'
+        };
+
+        // const config = Object.assign({...fetchCfg}, myCfg);
+        // 传统写法
+        return fetchJsonp(url, myCfg).then(response => {
+            debugger
+            response.json()
+        })
+            .then(responseJson => responseJson)
+            .catch((error) => {
+                console.log(`error = ${error.message}`);
+            });
+    }
+    
 
     public static post(prop: V) {
         const { url, params } = prop;
@@ -101,8 +136,6 @@ export default class HTTP {
         return fetch(url, {
             method: RequestMethod.delete,
             headers: HeaderConfig(),
-            // body: params,
-            // body: JSON.stringify(params),
         }).then(response => response.json())
             .then(responseJson => responseJson)
             .catch((error) => {

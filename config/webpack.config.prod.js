@@ -14,6 +14,7 @@ const paths = require('./paths');
 const getClientEnvironment = require('./env');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const tsImportPluginFactory = require('ts-import-plugin');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -141,7 +142,7 @@ module.exports = {
             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
             loader: require.resolve('url-loader'),
             options: {
-              limit: 10000,
+              limit: 1024,
               name: 'static/media/[name].[hash:8].[ext]',
             },
           },
@@ -150,14 +151,10 @@ module.exports = {
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
+              babelrc: true,
               plugins: [
-                ["import", {
-                  "libraryName": "antd",
-                  "libraryDirectory": "es",
-                  "style": "css" // `style: true` 会加载 less 文件
-                }]
-              ],
-              compact: true,
+                [  "import",{libraryName: "antd", style: 'css'}] // antd按需加载
+             ],
             },
           },
           // Compile .tsx?
@@ -171,6 +168,13 @@ module.exports = {
                   // disable type checker - we will use it in fork plugin
                   transpileOnly: true,
                   configFile: paths.appTsProdConfig,
+                  getCustomTransformers: () => ({
+                    before: [ tsImportPluginFactory({
+                      libraryDirectory: 'es',
+                      libraryName: 'antd',
+                      style: 'css',
+                    }) ]
+                  })
                 },
               },
             ],
