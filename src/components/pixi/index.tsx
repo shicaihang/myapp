@@ -39,6 +39,7 @@ export default class PIXI extends React.Component<{}, object>{
     
     }
     public resize = (e: any) => {
+        e.preventDefault();
         if (this.MyPixi.app) {
             this.MyPixi.app.resize(e);
         }

@@ -15,9 +15,10 @@ const buildPolygon = (polygonInfo: PolygonInfoInterface): PIXI.Graphics => {
     const { polygon, fillColor, lineWidth, lineColor, lineAlpha, position} = polygonInfo;
     ctx.beginFill(fillColor);
     ctx.lineStyle(lineWidth, lineColor, lineAlpha);
-    const first = polygon.splice(0, 1)[0];
+    const polygonClone = Array.from(polygon);
+    const first = polygonClone.splice(0, 1)[0];
     ctx.moveTo(first.x, first.y);
-    polygon.forEach(p => ctx.lineTo(p.x, p.y));
+    polygonClone.forEach(p => ctx.lineTo(p.x, p.y));
     ctx.endFill();
     ctx.position.set(position.x, position.y);
     ctx.hitArea = ctx.getLocalBounds();
