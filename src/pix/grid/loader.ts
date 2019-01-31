@@ -1,30 +1,32 @@
-import { Loader, Resources } from './type';
+import { Loader, Resources } from '../type';
 import bunny from 'src/res/bunny.png';
 import startLoop from './loop';
 import SpriteElement from './sprite';
 import { Point } from 'pixi.js';
 
-const addLoader = (app: any, container:any) => {
+const addLoader = (app: any, container: any) => {
     // const texture = Utils.TextureCache[bunny];
 
     // const sprite = new Sprite(texture);
 
     const setup = () => {
         const SESetting = {
-            width: 3,
-            height: 3,
+            width: 1,
+            height: 1,
             position: new Point(),
             rotation: 0,
+            url: bunny,
             texture: Resources[bunny].texture,
         }
+
         const sprite = new SpriteElement(SESetting);  // 精灵对象
-   
+
         // 原点 pivot 和 anchor类似，只是参数不一样
         // sprite.pivot.set(x, y);
         // sprite.rotation = 0.5;
         startLoop(app, sprite, container);
 
-        // sprite.on('mousewheel', app.resize);
+
 
         // const rectangle = new PIXI.Graphics();
         // rectangle.drawRect(x, y, 50, 50);
@@ -44,14 +46,16 @@ const addLoader = (app: any, container:any) => {
     };
 
     // add(name, url, optionObject, callbackFunction)
+    const complete = () => { console.log('add setting complete!') };
 
     const setting = {
         url: bunny,
-        onComplete: setup
+        onComplete: complete
     }
-    if (!Resources[bunny]) {
-        Loader.add(setting).load(setup).on("progress", loadProgressHandler);
+    if (!Resources[setting.url]) {
+        Loader.add(setting);
     }
+    Loader.load(setup).on("progress", loadProgressHandler);
 }
 
 export default addLoader;

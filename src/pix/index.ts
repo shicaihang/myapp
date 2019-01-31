@@ -1,7 +1,7 @@
 import { Application } from './type';
 import { setting } from './config';
-import addLoader from './loader';
-import Grid from './grid';
+import addLoader from './grid/loader';
+import Grid from './grid/grid';
 import { Point } from 'pixi.js';
 
 
@@ -11,9 +11,13 @@ export default class MyPIXI {
     public grid: Grid;
     public start = () => {
         // can then insert into the DOM
+        debugger
         this.app = new Application(setting);
         const app = this.app;
         const pixiEle: HTMLElement = document.getElementById('pixi') as HTMLElement;
+        if (pixiEle.firstChild) {
+            pixiEle.removeChild(pixiEle.firstChild);
+        }
         pixiEle.appendChild(app.view);
         const origin = new Point(0, 0);
         const width = app.renderer.width - 2 * setting.margin;

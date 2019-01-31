@@ -1,6 +1,6 @@
 
-import { setting } from './config';
-import Keyboard from './keyboard';
+import { setting } from '../config';
+import Keyboard from '../base/event/keyboard';
 
 // let state: any;
 
